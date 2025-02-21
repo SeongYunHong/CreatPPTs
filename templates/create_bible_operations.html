@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>말씀 PPT 생성</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bible_tooltip.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+          <a href="{{ url_for('index') }}">홈</a> &gt;
+          <a href="{{ url_for('create_bible_menu') }}">말씀 PPT 생성</a> &gt;
+          <span>기타 형식 생성</span>
+        </div>
+        <div class="title">
+            <h2>말씀 PPT 생성</h2>
+            <button class="cancel" onclick="window.location.href='{{ url_for('create_bible_menu') }}'">
+                <i class="fa-solid fa-xmark fa-2xl"></i>
+            </button>
+        </div>
+{#        <script type="text/javascript">#}
+{#          {% with messages = get_flashed_messages(with_categories=true) %}#}
+{#            {% if messages %}#}
+{#              {% for category, message in messages %}#}
+{#                alert("{{ message }}");#}
+{#              {% endfor %}#}
+{#            {% endif %}#}
+{#          {% endwith %}#}
+{#        </script>#}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" enctype="multipart/form-data">
+            <div class="tips tooltip">
+                <label for="text">설교노트</label>
+                <i class="fa-regular fa-circle-question fa-lg question_mark" style="line-height: 26px"></i>
+                <span class="tooltip-text">
+                    <h3>사용 시 주의사항</h3>
+                    <p>
+                        <h4>1. 설교노트나 말씀을 그대로 복사해서 넣으면 PPT가 생성됩니다.<br></h4>
+                    </p>
+                    <p>
+                        <h4>2. 패턴들을 지정해놔서 패턴에 맞는 파일들만 생성됩니다.<br></h4>
+                               &nbsp;&nbsp;1) 수1:8<br>
+                               &nbsp;&nbsp;2) 수1:8-9<br>
+                               &nbsp;&nbsp;3) 수1:8-9,11<br>
+                               &nbsp;&nbsp;4) 수1:8,11<br>
+                               &nbsp;&nbsp;5) 수1:8-9,11-14<br>
+                               &nbsp;&nbsp;6) 여호수아1:8<br>
+                               &nbsp;&nbsp;7) 여호수아1:8-9<br>
+                               &nbsp;&nbsp;8) 여호수아1:8-9,11<br>
+                               &nbsp;&nbsp;9) 여호수아1:8,11<br>
+                               &nbsp;&nbsp;10) 여호수아1:8-9,11-14<br><br>
+                                위 패턴으로 되어 있지 않으면 제대로 인식이 안될 수 있습니다.<br>
+                    </p>
+                    <p>
+                        <h4>3. 한글과 숫자 사이에는 공백이 허용되지만(여호수아 1:8),<br></h4>
+                                &nbsp;&nbsp;&nbsp;숫자부분에서는(1:8) 공백이 있으면 제대로 인식되지 않습니다.<br>
+                    </p>
+                    <p>
+                        <h4>4. 대제목과 말씀 구절이 같은 줄에 있는 경우 말씀 구절을<br>&nbsp;&nbsp;&nbsp;대제목으로 인식하여 제대로 생성되지 않습니다.</h4>
+                               &nbsp;&nbsp;&nbsp;ex) 2. 전신 갑주를 입으라: 영적 훈련은 선택이 아니라 필수다 (엡 11-13절)<br>
+                    </p>
+                    <p>
+                        <h4>5. 형태가 어떤 말씀 몇장 몇절인지 표시되지 않고 11-13절처럼 되어 있으면<br>&nbsp;&nbsp;&nbsp;패턴에 어긋나서 인식되지 않습니다<br></h4>
+                               &nbsp;&nbsp;&nbsp;ex) 2. 전신 갑주를 입으라: 영적 훈련은 선택이 아니라 필수다 (11-13절)<br>
+                    </p>
+                    <p>
+                        <h4>6. '-'이 아니고 다른 기호로 되어 있으면<br>
+                        &nbsp;&nbsp;&nbsp;말씀 타이틀(여호수아 Joshua | 1:8)이 잘못 생성됩니다.<br></h4>
+                           &nbsp;&nbsp;ex) '~'로 되어 있을 시, 여호수아 Joshua | 1:8~9 로 생성됨
+                    </p>
+                    <p>
+                        <h4>7. 소제목 위치를 지정해주는 기능은 아직 준비 중입니다.</h4>
+                    </p>
+                </span>
+            </div>
+
+            <textarea type="text" id="text" name="text" required></textarea>
+            <label for="bible_version_set">말씀 버전 선택</label>
+            <select id="bible_version_set" name="bible_version_set" required>
+                <option value="" disabled selected hidden>-- 버전을 선택하세요 --</option>
+                {% for b_version in bible_version_sets %}
+                    <option value="{{ b_version }}">{{ b_version }}</option>
+                {% endfor %}
+            </select>
+            {% if operation == 'create_bible_format' %}
+                <label for="ppt_version_set">PPT 템플릿 선택</label>
+                <select id="ppt_version_set" name="ppt_version_set" required>
+                    <option value="" disabled selected hidden>-- 버전을 선택하세요 --</option>
+                    {% if '없음.pptx' in ppt_version_sets %}
+                        <option value="없음">없음</option>
+                    {% endif %}
+                    {% for p_version in ppt_version_sets|sort %}
+                        {% if p_version != '없음.pptx' %}
+                            {% set clean_p_version = p_version | replace('_', ' ') | replace('.pptx', '') %}
+                            <option value="{{ p_version }}">{{ clean_p_version }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            {% endif %}
+
+            <label for="ppt_title">PPT 제목</label>
+            <input type="text" id="ppt_title" name="ppt_title" placeholder="PPT 제목을 입력하세요" required>
+            <button type="submit" class="btn">PPT 생성</button>
+        </form>
+    </div>
+</body>
+</html>

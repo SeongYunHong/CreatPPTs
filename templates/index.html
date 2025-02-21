@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>종합 PPT 생성기</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    />
+    <style>
+        /* 기본 스타일 */
+        * {
+            box-sizing: border-box;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+            overflow: hidden; /* 버튼이 박스에서 넘어가지 않도록 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>종합 PPT 생성기</h1>
+        <div class="menu">
+            <a href="{{ url_for('create_bible_menu') }}" class="btn">말씀 PPT 생성</a>
+            <a href="{{ url_for('change_lyrics_menu') }}" class="btn">가사 PPT 생성</a>
+        </div>
+    </div>
+</body>
+</html>

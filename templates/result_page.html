@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>생성 결과</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bible_tooltip.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <script type="text/javascript">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                alert("{{ message }}");
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </script>
+
+        <div class="title">
+            <h2>PPT 파일 생성 결과</h2>
+            <button class="cancel" onclick="window.location.href='{{ url_for('create_bible_menu') }}'">
+                <i class="fa-solid fa-xmark fa-2xl"></i>
+            </button>
+        </div>
+        <p>아래 버튼을 클릭하여 파일을 다운로드하세요.</p>
+
+        <!-- download_url을 링크로 제공 -->
+        <a href="{{ download_url }}" class="request-type" download>다운로드</a>
+    </div>
+</body>
+</html>

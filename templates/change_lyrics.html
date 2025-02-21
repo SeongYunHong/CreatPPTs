@@ -1,0 +1,60 @@
+<!-- templates/change_lyrics.html -->
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>가사 PPT 생성</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='song_tooltip.css') }}">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    />
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h2>가사 PPT 생성</h2>
+            <button class="cancel" onclick="window.location.href='{{ url_for('index') }}'">
+                <i class="fa-solid fa-xmark fa-2xl"></i>
+            </button>
+        </div>
+        <div class="tips tooltip">
+            <div class="question_mark">
+                <i class="fa-regular fa-circle-question fa-lg question" style="line-height: 26px"></i>
+            </div>
+            <span class="tooltip-text">
+                <h3>사용법</h3>
+                <p>
+                    <h4>1. 패턴을 지정해놔서 패턴에 맞는 파일만 생성됩니다.<br></h4>
+                    &nbsp;&nbsp;1) 2줄씩 한 세트로 한 슬라이드가 생성됩니다.<br>
+                    &nbsp;&nbsp;2) 한줄이 중간에 남을 때 그대로 생성하면 그 다음 가사의 첫줄이랑 합쳐지게 됩니다.<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2줄을 맞추기 위해 아무 글자나 넣고 파일이 생성되면 그 텍스트를 지우면 됩니다.<br><br>
+                </p>
+                <p>
+                    <h3>각 메뉴별 사용법</h3>
+                        &nbsp;&nbsp;1. 가사 변경: 기존 가사 파일 형식만 있어 한글과 영어 가사를 변경할 때 사용할 수 있습니다.<br><br>
+                        &nbsp;&nbsp;2. 기존 ppt에서 한글 가사만 변경: 기존 가사 파일 형식이 있어 한글 가사만 변경하면 될 때 사용할 수 있습니다.<br><br>
+                        &nbsp;&nbsp;3. 기존 ppt에서 영어 가사만 변경: 기존 가사 파일 형식이 있어 영어 가사만 변경하면 될 때 사용할 수 있습니다.<br><br>
+                        &nbsp;&nbsp;4. 가사 ppt 생성: 한글과 영어가 번갈아 이루어진 형식의 가사를 입력하면 새로운 ppt 생성할 때 사용할 수 있습니다.<br><br>
+                        &nbsp;&nbsp;5. 한글 가사 ppt 생성: 한글 가사만으로 이루어진 형식의 가사를 입력하면 새로운 ppt 생성할 때 사용할 수 있습니다.<br><br>
+                        &nbsp;&nbsp;6. 영어 가사 ppt 생성: 영어 가사만으로 이루어진 형식의 가사를 입력하면 새로운 ppt 생성할 때 사용할 수 있습니다.<br><br>
+                        &nbsp;&nbsp;7. 서울 형식 ppt 생성: 텍스트 박스가 위에 형성된 ppt 파일 생성할 때 사용할 수 있습니다.<br>
+                </p>
+            </span>
+        </div>
+
+        <div class="menu">
+            <a href="{{ url_for('change_lyrics_route', operation='change_lyrics') }}" class="request-type">가사 변경</a>
+            <a href="{{ url_for('change_lyrics_route', operation='change_only_korean_lyrics') }}" class="request-type">기존 ppt에서 한글 가사만 변경</a>
+            <a href="{{ url_for('change_lyrics_route', operation='change_only_english_lyrics') }}" class="request-type">기존 ppt에서 영어 가사만 변경</a>
+            <a href="{{ url_for('change_lyrics_route', operation='create_lyrics') }}" class="request-type">가사 PPT 생성</a>
+            <a href="{{ url_for('change_lyrics_route', operation='create_only_korean_lyrics') }}" class="request-type">한글 가사 PPT 생성</a>
+            <a href="{{ url_for('change_lyrics_route', operation='create_only_english_lyrics') }}" class="request-type">영어 가사 PPT 생성</a>
+            <a href="{{ url_for('change_lyrics_route', operation='create_subtitle_lyrics') }}" class="request-type">자막 버전 PPT 생성</a>
+            <a href="{{ url_for('change_lyrics_route', operation='create_seoul_form') }}" class="request-type">서울 형식 PPT 생성</a>
+        </div>
+    </div>
+</body>
+</html>

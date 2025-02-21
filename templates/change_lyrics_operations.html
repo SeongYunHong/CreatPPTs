@@ -1,0 +1,67 @@
+<!-- templates/change_lyrics_operations.html -->
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>가사 PPT 생성 - {{ operation.replace('_', ' ').capitalize() }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    />
+    <script>
+        // 자바스크립트를 이용해 작업에 따라 PPT 파일 업로드 필드를 동적으로 표시
+        function togglePptFileField(operation) {
+            const pptFileField = document.getElementById('ppt_file_field');
+            const operationsRequiringPpt = ['change_lyrics', 'change_only_korean_lyrics', 'change_only_english_lyrics'];
+            if (operationsRequiringPpt.includes(operation)) {
+                pptFileField.style.display = 'block';
+            } else {
+                pptFileField.style.display = 'none';
+            }
+        }
+        window.onload = function() {
+            const operation = "{{ operation }}";
+            togglePptFileField(operation);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h2>가사 PPT 생성 - {{ operation.replace('_', ' ').capitalize() }}</h2>
+            <button class="cancel" onclick="window.location.href='{{ url_for('change_lyrics_menu') }}'">
+                <i class="fa-solid fa-xmark fa-2xl"></i>
+            </button>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" enctype="multipart/form-data">
+            <label for="text">가사</label>
+            <textarea type="text" id="text" name="text" required></textarea>
+
+            <!-- PPT 파일 업로드 필드 (일부 작업에만 필요) -->
+            <div id="ppt_file_field" style="display: none;">
+                <label for="ppt_file">기존 PPT 파일 (.pptx)</label>
+                <input type="file" id="ppt_file" name="ppt_file" accept=".pptx">
+            </div>
+
+            <label for="ppt_title">PPT 제목</label>
+            <input type="text" id="ppt_title" name="ppt_title" placeholder="PPT 제목을 입력하세요" required>
+            <div class="button_group">
+                <button type="submit" class="btn">PPT 생성</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

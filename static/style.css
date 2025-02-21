@@ -1,0 +1,141 @@
+/* static/styles.css */
+
+/* 공통 스타일 */
+body {
+    font-family: '나눔고딕', sans-serif;
+    background-color: #f0f8ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    padding: 15px 30px 30px 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    overflow: visible;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cancel {
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"], input[type="file"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+textarea {
+    line-height: 20px;
+    resize: none;
+    height: 500px;
+}
+
+/* 컨테이너 안에 라벨과 아이콘, 툴팁이 함께 있음 */
+.tips {
+    position: relative;             /* 툴팁 배치를 위한 기준 컨테이너 */
+    padding: 8px 12px;
+    border-radius: 4px;
+    display: inline-flex;           /* 라벨, 아이콘이 한 줄에 뜨도록 */
+    justify-content: space-between;
+    align-items: center;            /* 수직 중앙 정렬 */
+    gap: 6px;                       /* 라벨과 아이콘 사이 간격 */
+    transition: background-color 0.3s; /* hover 시 배경색 바뀌는 애니메이션 */
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.btn {
+    background-color: lightblue;
+    color: white;
+    padding: 15px 25px;
+    border: 3px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #708d97;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.alert-warning {
+    background-color: #ff9800;
+    color: white;
+}
+
+.alert-danger {
+    background-color: #f44336;
+    color: white;
+}
+
+.alert-success {
+    background-color: #4caf50;
+    color: white;
+}
+
+.button_group {
+    display: flex;
+    justify-content: center;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.request-type {
+    background-color: lightblue;
+    color: white;
+    padding: 15px 25px;
+    border: 3px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.request-type:hover {
+    background-color: #708d97;
+}
