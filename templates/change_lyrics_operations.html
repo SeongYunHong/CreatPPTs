@@ -1,5 +1,3 @@
-<!-- templates/change_lyrics_operations.html -->
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -29,13 +27,35 @@
 </head>
 <body>
     <div class="container">
-        <div class="title">
-            <h2>가사 PPT 생성 - {{ operation.replace('_', ' ').capitalize() }}</h2>
-            <button class="cancel" onclick="window.location.href='{{ url_for('change_lyrics_menu') }}'">
+        <div class="breadcrumb-and-cancel">
+            <div class="breadcrumb">
+                <a href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i></a> &gt;
+                <a href="{{ url_for('change_lyrics_menu') }}">찬양 가사 생성</a> &gt;
+                {% if 'change_lyrics' in operation %}
+                    <a>가사 변경</a>
+                {% elif 'change_only_korean_lyrics' in operation %}
+                    <a>한글 가사만 변경</a>
+                {% elif 'change_only_english_lyrics' in operation %}
+                    <a>영어 가사만 변경</a>
+                {% elif 'create_lyrics' in operation %}
+                    <a>가사 생성</a>
+                {% elif 'create_only_korean_lyrics' in operation %}
+                    <a>한글 가사 생성</a>
+                {% elif 'create_only_english_lyrics' in operation %}
+                    <a>영어 가사 생성</a>
+                {% elif 'create_subtitle_lyrics' in operation %}
+                    <a>자막 가사 생성</a>
+                {% elif 'create_seoul_form' in operation %}
+                    <a>서울 찬양 가사 생성</a>
+                {% endif %}
+            </div>
+            <button class="cancel" onclick="window.location.href='{{ url_for('index') }}'">
                 <i class="fa-solid fa-xmark fa-2xl"></i>
             </button>
         </div>
-
+        <div class="title">
+            <h2>가사 PPT 생성</h2>
+        </div>
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}

@@ -21,6 +21,18 @@ body {
     overflow: visible;
 }
 
+.breadcrumb-and-cancel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0px;
+}
+
+.breadcrumb a {
+    text-decoration-line: none;
+    color: gray;
+}
+
 .title {
     display: flex;
     justify-content: space-between;
@@ -55,7 +67,7 @@ textarea {
 /* 컨테이너 안에 라벨과 아이콘, 툴팁이 함께 있음 */
 .tips {
     position: relative;             /* 툴팁 배치를 위한 기준 컨테이너 */
-    padding: 8px 12px;
+    padding: 8px 0px;
     border-radius: 4px;
     display: inline-flex;           /* 라벨, 아이콘이 한 줄에 뜨도록 */
     justify-content: space-between;

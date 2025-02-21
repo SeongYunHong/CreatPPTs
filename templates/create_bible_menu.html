@@ -11,14 +11,21 @@
 </head>
 <body>
     <div class="container">
+        <div class="breadcrumb-and-cancel">
+            <div class="breadcrumb">
+                <a href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i></a> &gt;
+                <a href="{{ url_for('create_bible_menu') }}">말씀 PPT 생성</a>
+            </div>
+            <button class="cancel" onclick="window.location.href='{{ url_for('index') }}'">
+                    <i class="fa-solid fa-xmark fa-2xl"></i>
+            </button>
+        </div>
         <div class="title">
             <h2>말씀 PPT 생성</h2>
-            <button class="cancel" onclick="window.location.href='{{ url_for('index') }}'">
-		<i class="fa-solid fa-xmark fa-2xl"></i>
-	    </button>
+
         </div>
         <div class="menu">
-            <a href="{{ url_for('create_bible_format_route', operation='create_bible_format') }}" class="request-type">오메가 말씀 PPT 생성</a>
+            <a href="{{ url_for('create_bible_format_route', operation='create_bible_format') }}" class="request-type">오메가교회 말씀 PPT 생성</a>
             <a href="{{ url_for('create_bible_format_route', operation='other_church') }}" class="request-type">기타 형식 생성</a>
         </div>
     </div>

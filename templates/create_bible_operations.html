@@ -9,26 +9,23 @@
 </head>
 <body>
     <div class="container">
-        <div class="breadcrumb">
-          <a href="{{ url_for('index') }}">홈</a> &gt;
-          <a href="{{ url_for('create_bible_menu') }}">말씀 PPT 생성</a> &gt;
-          <span>기타 형식 생성</span>
-        </div>
-        <div class="title">
-            <h2>말씀 PPT 생성</h2>
+        <div class="breadcrumb-and-cancel">
+            <div class="breadcrumb">
+                <a href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i></a> &gt;
+                <a href="{{ url_for('create_bible_menu') }}">말씀 PPT 생성</a> &gt;
+                {% if 'create_bible_format' in operation %}
+                    <a>오메가교회 말씀 PPT 생성</a>
+                {% elif 'other_church' in operation %}
+                    <a>기타 형식 생성</a>
+                {% endif %}
+            </div>
             <button class="cancel" onclick="window.location.href='{{ url_for('create_bible_menu') }}'">
                 <i class="fa-solid fa-xmark fa-2xl"></i>
             </button>
         </div>
-{#        <script type="text/javascript">#}
-{#          {% with messages = get_flashed_messages(with_categories=true) %}#}
-{#            {% if messages %}#}
-{#              {% for category, message in messages %}#}
-{#                alert("{{ message }}");#}
-{#              {% endfor %}#}
-{#            {% endif %}#}
-{#          {% endwith %}#}
-{#        </script>#}
+        <div class="title">
+            <h2>말씀 PPT 생성</h2>
+        </div>
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
