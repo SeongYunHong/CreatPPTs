@@ -1,0 +1,56 @@
+body {
+    font-family: '나눔고딕', sans-serif;
+    background-color: #f0f8ff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* 중앙 정렬 대신 상단 정렬 */
+    min-height: 100vh;       /* 높이를 최소 높이로 변경 */
+    margin: 0;
+    padding-top: 20px;
+    overflow-y: auto;        /* 수직 스크롤 활성화 */
+}
+
+textarea {
+    height: 80px;
+}
+
+.add-btn {
+    background-color: lightblue;
+    color: white;
+    padding: 15px 25px;
+    border: 3px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.add-btn:hover {
+    background-color: #708d97;
+}
+
+.path-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.create-btn {
+    background-color: lightblue;
+    color: white;
+    padding: 15px 25px;
+    border: 3px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.create-btn:hover {
+    background-color: #708d97;
+}

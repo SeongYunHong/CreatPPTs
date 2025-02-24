@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>송폼으로 생성</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='song_form.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='song_tooltip.css') }}">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    />
+    <script>
+    // "추가" 버튼을 클릭하면 새로운 구절 입력 필드를 추가합니다.
+    function addVerse() {
+        const verseContainer = document.getElementById("verse-container");
+        const newDiv = document.createElement("div");
+        newDiv.className = "verse-input";
+        newDiv.innerHTML = `
+            <label>섹션</label>
+            <input type="text" name="verse_name[]" placeholder="예: verse1" required>
+            <br>
+            <label>가사</label>
+            <textarea name="verse_text[]" rows="4" cols="50" placeholder="가사를 입력하세요" required></textarea>
+            <br><hr>
+            `;
+        verseContainer.appendChild(newDiv);
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb-and-cancel">
+            <div class="breadcrumb">
+                <a href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i></a> &gt;
+                <a href="{{ url_for('change_lyrics_menu') }}">가사 PPT 생성</a> &gt;
+                <a>송폼으로 생성</a>
+            </div>
+            <button class="cancel" onclick="window.location.href='{{ url_for('index') }}'">
+                    <i class="fa-solid fa-xmark fa-2xl"></i>
+            </button>
+        </div>
+        <div class="title">
+            <h1>송폼으로 생성</h1>
+            <button type="button" class="add-btn" onclick="addVerse()">추가</button>
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+            <div id="verse-container">
+                <div class="verse-input">
+                    <label>섹션</label>
+                    <input type="text" name="verse_name[]" placeholder="예: verse1" required>
+                    <br>
+                    <label>가사</label>
+                    <textarea name="verse_text[]" rows="4" cols="50" placeholder="가사를 입력하세요" required></textarea>
+                    <br><hr>
+                </div>
+            </div>
+            <label>가사 순서</label>
+            <input type="text" name="order" placeholder="ex) verse1 - verse2 - chorus" required>
+
+            <label for="ppt_title">PPT 제목</label>
+                <input type="text" id="ppt_title" name="ppt_title" placeholder="PPT 제목을 입력하세요" required>
+            <br><br>
+            <div class="path-btn">
+                <button type="submit" name="action" class="create-btn" value="create_lyrics">메인 PPT 폼 생성</button>
+                <button type="submit" name="action" class="create-btn" value="create_subtitle_lyrics">자막 PPT 폼 생성</button>
+                <button type="submit" name="action" class="create-btn" value="create_seoul_form">서울 PPT 폼 생성</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

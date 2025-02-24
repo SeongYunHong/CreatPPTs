@@ -425,3 +425,29 @@ class ChangeLyrics:
                     self.font_settings(paragraph, "나눔고딕", "15")
 
         self.save(prs)
+
+    def assemble_song(verse_names, verse_texts, order):
+        """
+        verse_names: 리스트, 예를 들어 ["verse1", "verse2", "chorus"]
+        verse_texts: 리스트, 각 구절에 해당하는 텍스트
+        order: 문자열, 예: "verse1 - verse2 - chorus - verse3 - chorus - chorus"
+        """
+        # 구절 이름과 가사를 딕셔너리로 매핑
+        verses = {}
+        for name, text in zip(verse_names, verse_texts):
+            verses[name.strip()] = text.strip()
+
+        # order 문자열을 '-' 기준으로 분리하여 순서대로 배열 생성
+        order_list = [item.strip() for item in order.split('-') if item.strip()]
+
+        # 지정한 순서대로 구절을 조합
+        assembled_song = []
+        for item in order_list:
+            if item in verses:
+                assembled_song.append(verses[item])
+            else:
+                assembled_song.append(f"존재하지 않는 구절: {item}")
+
+        # 최종 텍스트 반환
+        final_text = "\n\n".join(assembled_song)
+        return final_text

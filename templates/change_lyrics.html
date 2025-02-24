@@ -54,6 +54,7 @@
         </div>
 
         <div class="menu">
+            <a href="{{ url_for('song_form_route', operation='song_form') }}" class="request-type">송폼 입력하여 생성</a>
             <a href="{{ url_for('change_lyrics_route', operation='create_lyrics') }}" class="request-type">찬양 가사 생성</a>
             <a href="{{ url_for('change_lyrics_route', operation='create_only_korean_lyrics') }}" class="request-type">한글 가사 생성</a>
             <a href="{{ url_for('change_lyrics_route', operation='create_only_english_lyrics') }}" class="request-type">영어 가사 생성</a>

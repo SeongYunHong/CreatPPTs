@@ -251,6 +251,46 @@ def change_lyrics_route(operation):
 
     return render_template('change_lyrics_operations.html', operation=operation)
 
+@app.route('/change_lyrics/song_form', methods=['GET'])
+def song_form():
+    return render_template('song_form.html')
+
+@app.route('/change_lyrics/song_form', methods=['POST'])
+def song_form_route():
+    # 폼 데이터 가져오기
+    verse_names = request.form.getlist('verse_name[]')
+    verse_texts = request.form.getlist('verse_text[]')
+    order = request.form.get('order')
+    ppt_title = request.form.get('ppt_title')
+    action = request.form.get('action')  # 'create_lyrics', 'create_subtitle_lyrics', 'create_seoul_form'
+
+    # assemble_song 함수의 리턴값을 text 파라미터로 사용
+    final_song = ChangeLyrics.assemble_song(verse_names, verse_texts, order)
+
+    cl = ChangeLyrics(
+        text=final_song,
+        save_path='/tmp',
+        ppt_title=ppt_title,
+    )
+
+    # 버튼의 value에 따라 해당 메서드 호출
+    if action in ['create_lyrics', 'create_subtitle_lyrics', 'create_seoul_form']:
+        getattr(cl, action)()
+    else:
+        flash('잘못된 작업 선택입니다.', 'danger')
+        return redirect(url_for('song_form'))
+
+    # 생성된 PPT 파일 경로 확인 후 다운로드 처리
+    ppt_output_filename = f"{ppt_title}.pptx"
+    local_ppt_output_path = os.path.join('/tmp', ppt_output_filename)
+    if os.path.exists(local_ppt_output_path):
+        download_url = save_file_locally(local_ppt_output_path, ppt_output_filename)
+        flash('PPT 파일이 성공적으로 생성되었습니다.', 'success')
+        return redirect(url_for('show_result_page', download_url=download_url))
+    else:
+        flash('PPT 파일 생성에 실패했습니다.', 'danger')
+        return redirect(url_for('change_lyrics_route', operation=action))
+
 # PPT 파일 다운로드 라우트
 @app.route('/download/<filename>')
 def download_file(filename):
