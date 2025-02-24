@@ -426,7 +426,8 @@ class ChangeLyrics:
 
         self.save(prs)
 
-    def assemble_song(self, verse_names, verse_texts, order):
+    @staticmethod
+    def assemble_song(verse_names, verse_texts, order):
         """
         verse_names: 리스트, 예를 들어 ["verse1", "verse2", "chorus"]
         verse_texts: 리스트, 각 구절에 해당하는 텍스트
