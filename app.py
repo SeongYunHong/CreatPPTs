@@ -257,12 +257,31 @@ def song_form():
 
 @app.route('/change_lyrics/song_form', methods=['POST'])
 def song_form_route():
-    # 폼 데이터 가져오기
-    verse_names = request.form.getlist('verse_name[]')
-    verse_texts = request.form.getlist('verse_text[]')
-    order = request.form.get('order')
-    ppt_title = request.form.get('ppt_title')
-    action = request.form.get('action')  # 'create_lyrics', 'create_subtitle_lyrics', 'create_seoul_form'
+
+    if request.method == 'POST':
+        # 폼 데이터 가져오기
+        verse_names = request.form.getlist('verse_name[]')
+        verse_texts = request.form.getlist('verse_text[]')
+        order = request.form.get('order')
+        ppt_title = request.form.get('ppt_title')
+        action = request.form.get('action')
+
+        # 유효성 검사
+        if verse_names == '':
+            flash('섹션을 입력해주세요.', 'warning')
+            return redirect(url_for('song_form_route'))
+
+        if verse_texts == '':
+            flash('가사를 입력해주세요.', 'warning')
+            return redirect(url_for('song_form_route'))
+
+        if order == '':
+            flash('송폼 진행 순서를 입력해주세요.', 'warning')
+            return redirect(url_for('song_form_route'))
+
+        if '-' not in order:
+            flash('송폼 진행 순서를 입력 시 "-"(하이픈)을 포함하여 작성해주세요.', 'warning')
+            return redirect(url_for('song_form_route'))
 
     # assemble_song 함수의 리턴값을 text 파라미터로 사용
     final_song = ChangeLyrics.assemble_song(verse_names, verse_texts, order)
