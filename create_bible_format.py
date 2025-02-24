@@ -260,7 +260,7 @@ class ChangeBibleFormat:
         else:
             header.paragraphs[0].alignment = PP_ALIGN.RIGHT
 
-        if 'OMEGA_7VISION' in self.ppt_template_path:
+        if 'OMEGA_7_VISION' in self.ppt_template_path:
             header.paragraphs[0].font.color.rgb = RGBColor(42, 57, 79)
         else:
             header.paragraphs[0].font.color.rgb = RGBColor(255, 255, 255)
@@ -277,8 +277,13 @@ class ChangeBibleFormat:
 
             for ppt_path, slide_range, full_bible_name, expanded_verse in zip(path_list, s_range, full_bible_names, expanded_verses):
                 if ppt_path == '':
-                    self.create_header(merged_ppt=merged_ppt, left=0, top=2.96, width=13.33, height=1.58, font_size=44, expanded_verse=expanded_verse, align_num=0, layout_num=2)
-                    self.create_header(merged_ppt=merged_ppt, left=4.58, top=0.84, width=8.76, height=1.11, font_size=30, expanded_verse=expanded_verse ,align_num=1, layout_num=4)
+                    logging.info(f'{self.ppt_template_path}')
+                    if '성령의_열매' in self.ppt_template_path:
+                        self.create_header(merged_ppt=merged_ppt, left=0.81, top=2.42, width=16.87, height=1.58, font_size=44, expanded_verse=expanded_verse, align_num=1, layout_num=2)
+                        self.create_header(merged_ppt=merged_ppt, left=0.81, top=1.67, width=8.76, height=0.61, font_size=30, expanded_verse=expanded_verse, align_num=1, layout_num=4)
+                    else:
+                        self.create_header(merged_ppt=merged_ppt, left=0, top=2.96, width=13.33, height=1.58, font_size=44, expanded_verse=expanded_verse, align_num=0, layout_num=2)
+                        self.create_header(merged_ppt=merged_ppt, left=4.58, top=0.84, width=8.76, height=1.11, font_size=30, expanded_verse=expanded_verse ,align_num=1, layout_num=4)
                 else:
                     source_prs = Presentation(ppt_path)
                     title_slide_layout = merged_ppt.slide_layouts[3]
