@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>송폼으로 생성</title>
+    <title>송폼 입력하여 생성</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='song_form.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='song_tooltip.css') }}">
@@ -34,14 +34,14 @@
             <div class="breadcrumb">
                 <a href="{{ url_for('index') }}"><i class="fa-solid fa-house"></i></a> &gt;
                 <a href="{{ url_for('change_lyrics_menu') }}">가사 PPT 생성</a> &gt;
-                <a>송폼으로 생성</a>
+                <a>송폼 입력하여 생성</a>
             </div>
             <button class="cancel" onclick="window.location.href='{{ url_for('index') }}'">
                     <i class="fa-solid fa-xmark fa-2xl"></i>
             </button>
         </div>
         <div class="title">
-            <h1>송폼으로 생성</h1>
+            <h1>송폼 입력하여 생성</h1>
             <button type="button" class="add-btn" onclick="addVerse()">추가</button>
         </div>
         <form method="POST" enctype="multipart/form-data">
