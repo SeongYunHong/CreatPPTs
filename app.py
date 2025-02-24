@@ -283,32 +283,36 @@ def song_form_route():
             flash('송폼 진행 순서를 입력 시 "-"(하이픈)을 포함하여 작성해주세요.', 'warning')
             return redirect(url_for('song_form_route'))
 
-    # assemble_song 함수의 리턴값을 text 파라미터로 사용
-    final_song = ChangeLyrics.assemble_song(verse_names, verse_texts, order)
+        # assemble_song 함수의 리턴값을 text 파라미터로 사용
+        final_song = ChangeLyrics.assemble_song(verse_names, verse_texts, order)
+        try:
+            cl = ChangeLyrics(
+                text=final_song,
+                save_path='/tmp',
+                ppt_title=ppt_title,
+            )
 
-    cl = ChangeLyrics(
-        text=final_song,
-        save_path='/tmp',
-        ppt_title=ppt_title,
-    )
+            # 버튼의 value에 따라 해당 메서드 호출
+            if action in ['create_lyrics', 'create_subtitle_lyrics', 'create_seoul_form']:
+                getattr(cl, action)()
+            else:
+                flash('잘못된 작업 선택입니다.', 'danger')
+                return redirect(url_for('song_form'))
 
-    # 버튼의 value에 따라 해당 메서드 호출
-    if action in ['create_lyrics', 'create_subtitle_lyrics', 'create_seoul_form']:
-        getattr(cl, action)()
-    else:
-        flash('잘못된 작업 선택입니다.', 'danger')
-        return redirect(url_for('song_form'))
-
-    # 생성된 PPT 파일 경로 확인 후 다운로드 처리
-    ppt_output_filename = f"{ppt_title}.pptx"
-    local_ppt_output_path = os.path.join('/tmp', ppt_output_filename)
-    if os.path.exists(local_ppt_output_path):
-        download_url = save_file_locally(local_ppt_output_path, ppt_output_filename)
-        flash('PPT 파일이 성공적으로 생성되었습니다.', 'success')
-        return redirect(url_for('show_result_page', download_url=download_url))
-    else:
-        flash('PPT 파일 생성에 실패했습니다.', 'danger')
-        return redirect(url_for('change_lyrics_route', operation=action))
+            # 생성된 PPT 파일 경로 확인 후 다운로드 처리
+            ppt_output_filename = f"{ppt_title}.pptx"
+            local_ppt_output_path = os.path.join('/tmp', ppt_output_filename)
+            if os.path.exists(local_ppt_output_path):
+                download_url = save_file_locally(local_ppt_output_path, ppt_output_filename)
+                flash('PPT 파일이 성공적으로 생성되었습니다.', 'success')
+                return redirect(url_for('show_result_page', download_url=download_url))
+            else:
+                flash('PPT 파일 생성에 실패했습니다.', 'danger')
+                return redirect(url_for('change_lyrics_route', operation=action))
+        except Exception as e:
+            logging.error(f"에러 발생: {e}")
+            flash(f"에러 발생: {e}", 'danger')
+            return redirect(url_for('song_form_route'))
 
 # PPT 파일 다운로드 라우트
 @app.route('/download/<filename>')
