@@ -6,9 +6,10 @@ body {
     background-color: #f0f8ff;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     height: 100vh;
     margin: 0;
+    padding-top: 20px;
 }
 
 .container {
