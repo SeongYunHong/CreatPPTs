@@ -1,6 +1,4 @@
 # 종합 PPT 생성기 | Create_PPT
-<https://durable-epoch-447213-c5.de.r.appspot.com/>
-
 Flask와 Python으로 구성된 프로젝트
 
 ## 🖥️ 프로젝트 소개
